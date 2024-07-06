@@ -23,6 +23,60 @@ ball_y1 = screen_size[1]/1.8
 ball_x2 = 625
 ball_y2 = screen_size[1]/1.8
 
+main_menu_font=pygame.font.Font(None, 36)
+text_color = (255, 255, 255)
+hover_color = (200, 200, 200)
+centerx= 100
+centery= 100
+
+
+def draw_text(text, font, color, screen, centerx, centery):
+    text_test = font.render(text, True, color)
+    text_field = text_test.get_rect()
+    text_field.centerx = centerx
+    text_field.centery = centery
+    screen.blit(text_test, text_field)
+
+
+def main_menu():
+    while True:
+        mx, my = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                for i, button in enumerate(menu_items):
+                    if screen_size[1] / 2 + 50 * i - 25 < my < screen_size[1] / 2 + 50 * i + 25:
+                        menu_items_map[button]()
+        screen.fill(background_color)
+        for i, button in enumerate(menu_items):
+            if screen_size[1]/2+50*i -25 < my < screen_size[1]/2+50*i +25:
+                draw_text(button, main_menu_font, hover_color, screen, screen_size[0]/2, screen_size[1]/2+50*i)
+            else:
+                draw_text(button, main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2 + 50 * i)
+        pygame.display.flip()
+
+
+def settings():
+    while True:
+        mx, my = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                for i, button in enumerate(settings_items):
+                    if 35 + 50*i - 25 < my < 35 + 50*i + 25:
+                        settings_items_map[button]()
+        screen.fill(background_color)
+        for i, button in enumerate(settings_items):
+            if 35 + 50*i - 25 < my < 35 + 50*i + 25:
+                draw_text(button, main_menu_font, hover_color, screen, screen_size[0] / 2, 35 + 50*i)
+            else:
+                draw_text(button, main_menu_font, text_color, screen, screen_size[0] / 2, 35 + 50*i)
+        pygame.display.flip()
+
 
 def game():
     running = True
@@ -44,11 +98,6 @@ def game():
     height_grass = screen_size[1]/1.8
     width_sky = screen_size[0]
     height_sky = screen_size[1]
-
-
-    # score = [0, 0]
-    # score_font = pygame.font.SysFont("Arial", 20)
-
     is_jumping1 = False
     is_jumping2 = False
     jump_speed = 20
@@ -101,8 +150,6 @@ def game():
         pygame.draw.circle(screen, color1, (ball_x1, ball_y1), ball_radius)
         pygame.draw.circle(screen, color2, (ball_x2, ball_y2), ball_radius)
 
-        # render_text = score_font.render(f"Score {score[0]}:{score[1]}", True, color)
-        # screen.blit(render_text, [screen_size[0]/2 - render_text.get_size()[0]/2, screen_size[1]/2-220], )
         pygame.display.flip()
         clock.tick(60)
     pygame.quit()
@@ -111,40 +158,22 @@ def game():
 
 menu_items = ["Start","Settings","Exit"]
 menu_items_map = {
-    "Start": game ,
-    #"Settings": settings,
+    "Start": game,
+    "Settings": settings,
     "Exit": exit_game
 }
-main_menu_font=pygame.font.Font(None, 36)
-text_color = (255, 255, 255)
-hover_color = (200, 200, 200)
-centerx= 100
-centery= 100
-
-def draw_text(text, font, color, screen, centerx, centery):
-    text_test = font.render(text, True, color)
-    text_field = text_test.get_rect()
-    text_field.centerx = centerx
-    text_field.centery = centery
-    screen.blit(text_test, text_field)
-def main_menu():
-    while True:
-        mx, my = pygame.mouse.get_pos()
-        for event in pygame.event.get():
-            if event.type==pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                for i, button in enumerate(menu_items):
-                    if screen_size[1] / 2 + 50 * i - 25 < my < screen_size[1] / 2 + 50 * i + 25:
-                        menu_items_map[button]()
-        screen.fill(background_color)
-        for i, button in enumerate(menu_items):
-            if screen_size[1]/2+50*i -25 < my < screen_size[1]/2+50*i +25:
-                draw_text(button, main_menu_font, hover_color, screen, screen_size[0]/2, screen_size[1]/2+50*i)
-            else:
-                draw_text(button, main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2 + 50 * i)
-        pygame.display.flip()
+settings_items = ["Continue","Restart","Sound","Language","Change player name","Change player color","Write a feedback","Return to menu","Quit"]
+settings_items_map = {
+    "Continue": game,
+    "Restart": game,
+    "Sound": empty,
+    "Language": empty,
+    "Change player name": empty,
+    "Change player color": empty,
+    "Write a feedback": empty,
+    "Return to menu": main_menu,
+    "Quit": exit_game
+}
 
 
 if __name__ == "__main__":
