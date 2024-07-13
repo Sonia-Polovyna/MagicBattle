@@ -26,8 +26,8 @@ ball_y2 = screen_size[1]/1.8
 main_menu_font=pygame.font.Font(None, 36)
 text_color = (255, 255, 255)
 hover_color = (200, 200, 200)
-centerx= 100
-centery= 100
+centerx = 100
+centery = 100
 
 
 def draw_text(text, font, color, screen, centerx, centery):
@@ -67,14 +67,14 @@ def settings():
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for i, button in enumerate(settings_items):
-                    if 35 + 50*i - 25 < my < 35 + 50*i + 25:
+                    if 150 + 50*i - 25 < my < 150 + 50*i + 25:
                         settings_items_map[button]()
         screen.fill(background_color)
         for i, button in enumerate(settings_items):
-            if 35 + 50*i - 25 < my < 35 + 50*i + 25:
-                draw_text(button, main_menu_font, hover_color, screen, screen_size[0] / 2, 35 + 50*i)
+            if 150 + 50*i - 25 < my < 150 + 50*i + 25:
+                draw_text(button, main_menu_font, hover_color, screen, screen_size[0] / 2, 150 + 50*i)
             else:
-                draw_text(button, main_menu_font, text_color, screen, screen_size[0] / 2, 35 + 50*i)
+                draw_text(button, main_menu_font, text_color, screen, screen_size[0] / 2, 150 + 50*i)
         pygame.display.flip()
 
 
@@ -162,15 +162,11 @@ menu_items_map = {
     "Settings": settings,
     "Exit": exit_game
 }
-settings_items = ["Continue","Restart","Sound","Language","Change player name","Change player color","Write a feedback","Return to menu","Quit"]
+settings_items = ["Continue", "Restart", "Sound", "Return to menu", "Quit"]
 settings_items_map = {
     "Continue": game,
     "Restart": game,
     "Sound": empty,
-    "Language": empty,
-    "Change player name": empty,
-    "Change player color": empty,
-    "Write a feedback": empty,
     "Return to menu": main_menu,
     "Quit": exit_game
 }
