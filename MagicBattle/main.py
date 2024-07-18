@@ -168,8 +168,9 @@ def game():
     can_cast_player2 = True
 
     clock = pygame.time.Clock()
-    # music = pygame.mixer.Sound("Name of the song")
-    # music.play(-1)
+    music = pygame.mixer.Sound("Gameboy.mp3")
+    music.play(-1)
+    pygame.mixer.music.set_volume(0.5)
     while running:
         events = pygame.event.get()
         for event in events:
@@ -263,3 +264,18 @@ settings_items_map = {
 
 if __name__ == "__main__":
     main_menu()
+health_img = pygame.image.load('serdce_480.png')
+health = 2
+
+
+def show_health():
+    global health
+    show = 0
+    x = 20
+    while show != health:
+        pygame.display.blit(health_img, (x, 20))
+        x += 40
+        show += 1
+
+
+show_health()
