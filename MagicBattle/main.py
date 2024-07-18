@@ -71,7 +71,8 @@ def cast_spell(from_pos, to_pos, spell_color, player_num):
     angle = math.atan2(to_pos[1] - from_pos[1], to_pos[0] - from_pos[0])
     velocity = (spell_speed * math.cos(angle), spell_speed * math.sin(angle))
     spells.append({'pos': list(from_pos), 'velocity': velocity, 'distance': 0,
-                   'spell_color': spell_color, 'player_num' : player_num})
+                   'spell_color': spell_color, 'player_num': player_num})
+
 
 def update_spells(circle_pos, circle_radius, player_spells):
 
@@ -93,7 +94,6 @@ def update_spells(circle_pos, circle_radius, player_spells):
             pygame.draw.line(screen, spell['spell_color'], old_pos, spell['pos'], 5)
 
 
-
 def settings():
     while True:
         mx, my = pygame.mouse.get_pos()
@@ -112,6 +112,7 @@ def settings():
             else:
                 draw_text(button, main_menu_font, text_color, screen, screen_size[0] / 2, 150 + 50*i)
         pygame.display.flip()
+
 
 def line_circle_intersection(line_start, line_end, circle_center, circle_radius):
     dx = line_end[0] - line_start[0]
@@ -134,6 +135,7 @@ def line_circle_intersection(line_start, line_end, circle_center, circle_radius)
         return True
 
     return False
+
 
 def game():
     global spells
@@ -207,16 +209,15 @@ def game():
                 is_jumping2 = False
 
 
-
-        #стостується першого гравця
+        # стостується першого гравця
         if keys[pygame.K_s] and can_cast_player1:
             cast_spell([ball_x1, ball_y1], [ball_x2, ball_y2],
-                       spell_color = random.choice(spell_color_players1), player_num=1)
+                       spell_color=random.choice(spell_color_players1), player_num=1)
             can_cast_player1 = False
-        #стосується другого гравця
+        # стосується другого гравця
         if keys[pygame.K_DOWN] and can_cast_player2:
             cast_spell([ball_x2, ball_y2], [ball_x1, ball_y1],
-                       spell_color = random.choice(spell_color_players2), player_num=2)
+                       spell_color=random.choice(spell_color_players2), player_num=2)
             can_cast_player2 = False
         # перевірка чи може луч запускати
         spells_player1 = [spell for spell in spells if spell['player_num'] == 1]
