@@ -36,8 +36,7 @@ length = 10
 spell_speed = 6
 spells = []
 spell_delay = 100
-centerx = 100
-centery = 100
+
 
 
 def draw_text(text, font, color, screen, centerx, centery):
@@ -75,11 +74,16 @@ def cast_spell(from_pos, to_pos, spell_color, player_num):
                    'spell_color': spell_color, 'player_num' : player_num})
 
 def update_spells(circle_pos, circle_radius, player_spells):
+
     for spell in player_spells:
         old_pos = spell['pos'].copy()
         spell['pos'][0] += spell['velocity'][0]
         spell['pos'][1] += spell['velocity'][1]
         spell['distance'] += spell_speed
+        end_pos = (
+            old_pos[0] + length * spell['velocity'][0] / spell_speed,
+            old_pos[1] + length * spell['velocity'][1] / spell_speed
+        )
 
          # Перевірка перетину з колом
         if line_circle_intersection(old_pos, spell['pos'], circle_pos, circle_radius):
@@ -87,6 +91,7 @@ def update_spells(circle_pos, circle_radius, player_spells):
             spells.remove(spell)
         else:
             pygame.draw.line(screen, spell['spell_color'], old_pos, spell['pos'], 5)
+
 
 
 def settings():
