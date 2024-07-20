@@ -36,6 +36,12 @@ length = 10
 spell_speed = 6
 spells = []
 spell_delay = 100
+health_img1 = pygame.image.load('serdce_480.png')
+health_img1 = pygame.transform.scale(health_img1, (20, 20))
+health1 = 3
+health_img2 = pygame.image.load('serdce_480.png')
+health_img2 = pygame.transform.scale(health_img2, (20, 20))
+health2 = 3
 
 
 def draw_text(text, font, color, screen, centerx, centery):
@@ -44,6 +50,26 @@ def draw_text(text, font, color, screen, centerx, centery):
     text_field.centerx = centerx
     text_field.centery = centery
     screen.blit(text_test, text_field)
+
+
+def show_health2():
+    global health2
+    show = 0
+    x = screen_size[0] - 120
+    while show != health2:
+        screen.blit(health_img2, (x, 20))
+        x += 40
+        show += 1
+
+
+def show_health1():
+    global health1
+    show = 0
+    x = 20
+    while show != health1:
+        screen.blit(health_img1, (x, 20))
+        x += 40
+        show += 1
 
 
 # функція меню
@@ -170,7 +196,7 @@ def game():
     clock = pygame.time.Clock()
     music = pygame.mixer.Sound("Gameboy.mp3")
     music.play(-1)
-    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.set_volume(0.2)
     while running:
         events = pygame.event.get()
         for event in events:
@@ -209,7 +235,6 @@ def game():
                 ball_y2 = screen_size[1] // 1.8
                 is_jumping2 = False
 
-
         # стостується першого гравця
         if keys[pygame.K_s] and can_cast_player1:
             cast_spell([ball_x1, ball_y1], [ball_x2, ball_y2],
@@ -240,6 +265,8 @@ def game():
         pygame.draw.circle(screen, color2, (ball_x2, ball_y2), ball_radius)
         update_spells([ball_x2, ball_y2], ball_radius, spells_player1)
         update_spells([ball_x1, ball_y1], ball_radius, spells_player2)
+        show_health1()
+        show_health2()
         pygame.display.flip()
         clock.tick(60)
     pygame.quit()
@@ -264,18 +291,3 @@ settings_items_map = {
 
 if __name__ == "__main__":
     main_menu()
-health_img = pygame.image.load('serdce_480.png')
-health = 2
-
-
-def show_health():
-    global health
-    show = 0
-    x = 20
-    while show != health:
-        pygame.display.blit(health_img, (x, 20))
-        x += 40
-        show += 1
-
-
-show_health()
