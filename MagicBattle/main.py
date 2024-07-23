@@ -52,6 +52,29 @@ def draw_text(text, font, color, screen, centerx, centery):
     screen.blit(text_test, text_field)
 
 
+# Перевірка попадання ліній в коло
+def check_spells(circle_pos, circle_radius, player_spells, player_num):
+        global health1
+        global health2
+        for spell in player_spells:
+            old_pos = spell['pos'].copy()
+            spell['pos'][0] += spell['velocity'][0]
+            spell['pos'][1] += spell['velocity'][1]
+            spell['distance'] += spell_speed
+            end_pos = (
+                old_pos[0] + length * spell['velocity'][0] / spell_speed,
+                old_pos[1] + length * spell['velocity'][1] / spell_speed
+            )
+
+            # Перевірка перетину з колом
+            if line_circle_intersection(old_pos, spell['pos'], circle_pos, circle_radius) and player_num == 2:
+                health1 = health1 - 1
+                spells.remove(spell)
+            if line_circle_intersection(old_pos, spell['pos'], circle_pos, circle_radius) and player_num == 1:
+                health2 = health2 - 1
+                spells.remove(spell)
+
+
 def show_health2():
     global health2
     show = 0
@@ -196,7 +219,7 @@ def game():
     clock = pygame.time.Clock()
     music = pygame.mixer.Sound("Gameboy.mp3")
     music.play(-1)
-    pygame.mixer.music.set_volume(0.2)
+    music.set_volume(0.2)
     while running:
         events = pygame.event.get()
         for event in events:
@@ -235,16 +258,6 @@ def game():
                 ball_y2 = screen_size[1] // 1.8
                 is_jumping2 = False
 
-        # перевірка к-сті сердечок + текст переможець
-        if health1 == 0:
-            screen.fill(background_color)
-            draw_text("Game over", main_menu_font, text_color, screen, centerx, centery)
-            draw_text("Winner - PLayer 2", main_menu_font, text_color, screen, centerx, centery + 50)
-        elif health2 == 0:
-            screen.fill(background_color)
-            draw_text("Game over", main_menu_font, text_color, screen, centerx, centery)
-            draw_text("Winner - PLayer 1", main_menu_font, text_color, screen, centerx, centery + 50)
-
         # стостується першого гравця
         if keys[pygame.K_s] and can_cast_player1:
             cast_spell([ball_x1, ball_y1], [ball_x2, ball_y2],
@@ -267,16 +280,27 @@ def game():
         spells = [spell for spell in spells if
                   0 <= spell['pos'][0] <= screen_size[0] and 0 <= spell['pos'][1] <= screen_size[1]]
 
-        screen.fill((0, 0, 0))
-
-        pygame.draw.rect(screen, color_sky, (sky_x, sky_y, width_sky, height_sky))
-        pygame.draw.rect(screen, color_grass, (grass_x, grass_y, width_grass, height_grass))
-        pygame.draw.circle(screen, color1, (ball_x1, ball_y1), ball_radius)
-        pygame.draw.circle(screen, color2, (ball_x2, ball_y2), ball_radius)
-        update_spells([ball_x2, ball_y2], ball_radius, spells_player1)
-        update_spells([ball_x1, ball_y1], ball_radius, spells_player2)
-        show_health1()
-        show_health2()
+        # перевірка к-сті сердечок + текст переможець
+        if health1 == 0:
+            screen.fill(background_color)
+            draw_text("Game over", main_menu_font, text_color, screen, centerx, centery)
+            draw_text("Winner - PLayer 2", main_menu_font, text_color, screen, centerx, centery + 50)
+        elif health2 == 0:
+            screen.fill(background_color)
+            draw_text("Game over", main_menu_font, text_color, screen, centerx, centery)
+            draw_text("Winner - PLayer 1", main_menu_font, text_color, screen, centerx, centery + 50)
+        else:
+            screen.fill((0, 0, 0))
+            pygame.draw.rect(screen, color_sky, (sky_x, sky_y, width_sky, height_sky))
+            pygame.draw.rect(screen, color_grass, (grass_x, grass_y, width_grass, height_grass))
+            pygame.draw.circle(screen, color1, (ball_x1, ball_y1), ball_radius)
+            pygame.draw.circle(screen, color2, (ball_x2, ball_y2), ball_radius)
+            update_spells([ball_x2, ball_y2], ball_radius, spells_player1)
+            update_spells([ball_x1, ball_y1], ball_radius, spells_player2)
+            check_spells([ball_x2, ball_y2], ball_radius, spells_player1, 1)
+            check_spells([ball_x1, ball_y1], ball_radius, spells_player2, 2)
+            show_health1()
+            show_health2()
         pygame.display.flip()
         clock.tick(60)
     pygame.quit()
