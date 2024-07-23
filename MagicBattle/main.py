@@ -235,6 +235,16 @@ def game():
                 ball_y2 = screen_size[1] // 1.8
                 is_jumping2 = False
 
+        # перевірка к-сті сердечок + текст переможець
+        if health1 == 0:
+            screen.fill(background_color)
+            draw_text("Game over", main_menu_font, text_color, screen, centerx, centery)
+            draw_text("Winner - PLayer 2", main_menu_font, text_color, screen, centerx, centery + 50)
+        elif health2 == 0:
+            screen.fill(background_color)
+            draw_text("Game over", main_menu_font, text_color, screen, centerx, centery)
+            draw_text("Winner - PLayer 1", main_menu_font, text_color, screen, centerx, centery + 50)
+
         # стостується першого гравця
         if keys[pygame.K_s] and can_cast_player1:
             cast_spell([ball_x1, ball_y1], [ball_x2, ball_y2],
@@ -279,11 +289,10 @@ menu_items_map = {
     "Settings": settings,
     "Exit": exit_game
 }
-settings_items = ["Continue", "Restart", "Sound", "Return to menu", "Quit"]
+settings_items = ["Continue", "Restart", "Return to menu", "Quit"]
 settings_items_map = {
     "Continue": game,
     "Restart": game,
-    "Sound": empty,
     "Return to menu": main_menu,
     "Quit": exit_game
 }
