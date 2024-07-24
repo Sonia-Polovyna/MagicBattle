@@ -147,6 +147,8 @@ def update_spells(circle_pos, circle_radius, player_spells):
          # Перевірка перетину з колом
         if line_circle_intersection(old_pos, spell['pos'], circle_pos, circle_radius):
             print("Промінь перетнув коло!")
+            pygame.mixer.Sound.play(attack_sound)
+            pygame.mixer.music.stop()
             spells.remove(spell)
         else:
             pygame.draw.line(screen, spell['spell_color'], old_pos, spell['pos'], 5)
@@ -305,11 +307,11 @@ def game():
         if health1 == 0:
             screen.fill(background_color)
             draw_text("Game over", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2)
-            draw_text("Winner - PLayer 2", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2 + 50)
+            draw_text("Winner is PLayer 2", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2 + 50)
         elif health2 == 0:
             screen.fill(background_color)
             draw_text("Game over", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2)
-            draw_text("Winner - PLayer 1", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2 + 50)
+            draw_text("Winner is PLayer 1", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2 + 50)
         else:
             screen.fill((0, 0, 0))
             pygame.draw.rect(screen, color_sky, (sky_x, sky_y, width_sky, height_sky))
