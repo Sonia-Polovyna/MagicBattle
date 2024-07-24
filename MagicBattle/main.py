@@ -152,14 +152,14 @@ def settings():
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for i, button in enumerate(settings_items):
-                    if 100 + 50*i - 25 < my < 100 + 50*i + 25:
+                    if 115 + 50*i - 25 < my < 115 + 50*i + 25:
                         settings_items_map[button]()
         screen.fill(background_color)
         for i, button in enumerate(settings_items):
-            if 100 + 50*i - 25 < my < 100 + 50*i + 25:
-                draw_text(button, main_menu_font, hover_color, screen, screen_size[0] / 2, 100 + 50*i)
+            if 115 + 50*i - 25 < my < 115 + 50*i + 25:
+                draw_text(button, main_menu_font, hover_color, screen, screen_size[0] / 2, screen_size[1] / 2 + 50*i)
             else:
-                draw_text(button, main_menu_font, text_color, screen, screen_size[0] / 2, 100 + 50*i)
+                draw_text(button, main_menu_font, text_color, screen, screen_size[0] / 2, screen_size[1] / 2 + 50*i)
         pygame.display.flip()
 
 
