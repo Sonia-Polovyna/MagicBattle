@@ -42,6 +42,11 @@ health1 = 3
 health_img2 = pygame.image.load('serdce_480.png')
 health_img2 = pygame.transform.scale(health_img2, (20, 20))
 health2 = 3
+attack_sound = pygame.mixer.Sound("attack.mp3")
+jump_sound = pygame.mixer.Sound("jump.mp3")
+step_sound = pygame.mixer.Sound("step.mp3")
+jump_sound.set_volume(0.2)
+step_sound.set_volume(0.2)
 
 
 def draw_text(text, font, color, screen, centerx, centery):
@@ -69,9 +74,13 @@ def check_spells(circle_pos, circle_radius, player_spells, player_num):
             # Перевірка перетину з колом
             if line_circle_intersection(old_pos, spell['pos'], circle_pos, circle_radius) and player_num == 2:
                 health1 = health1 - 1
+                pygame.mixer.Sound.play(attack_sound)
+                pygame.mixer.music.stop()
                 spells.remove(spell)
             if line_circle_intersection(old_pos, spell['pos'], circle_pos, circle_radius) and player_num == 1:
                 health2 = health2 - 1
+                pygame.mixer.Sound.play(attack_sound)
+                pygame.mixer.music.stop()
                 spells.remove(spell)
 
 
@@ -219,7 +228,7 @@ def game():
     clock = pygame.time.Clock()
     music = pygame.mixer.Sound("Gameboy.mp3")
     music.play(-1)
-    music.set_volume(0.2)
+    music.set_volume(0.5)
     while running:
         events = pygame.event.get()
         for event in events:
@@ -238,22 +247,34 @@ def game():
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a] and ball_x1 > 0:
             ball_x1 = ball_x1 - movement
+            pygame.mixer.Sound.play(step_sound)
+            pygame.mixer.music.stop()
         if keys[pygame.K_d] and ball_x1 > 0:
             ball_x1 = ball_x1 + movement
+            pygame.mixer.Sound.play(step_sound)
+            pygame.mixer.music.stop()
         if keys[pygame.K_LEFT] and ball_x2 > 0:
             ball_x2 = ball_x2 - movement
+            pygame.mixer.Sound.play(step_sound)
+            pygame.mixer.music.stop()
         if keys[pygame.K_RIGHT] and ball_x2 > 0:
             ball_x2 = ball_x2 + movement
+            pygame.mixer.Sound.play(step_sound)
+            pygame.mixer.music.stop()
         # стрибки
         if is_jumping1:
             vertical_speed1 += gravity
             ball_y1 += vertical_speed1
+            pygame.mixer.Sound.play(jump_sound)
+            pygame.mixer.music.stop()
             if ball_y1 >= screen_size[1] // 1.8:
                 ball_y1 = screen_size[1] // 1.8
                 is_jumping1 = False
         if is_jumping2:
             vertical_speed2 += gravity
             ball_y2 += vertical_speed2
+            pygame.mixer.Sound.play(jump_sound)
+            pygame.mixer.music.stop()
             if ball_y2 >= screen_size[1] // 1.8:
                 ball_y2 = screen_size[1] // 1.8
                 is_jumping2 = False
