@@ -152,14 +152,14 @@ def settings():
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for i, button in enumerate(settings_items):
-                    if 150 + 50*i - 25 < my < 150 + 50*i + 25:
+                    if 100 + 50*i - 25 < my < 100 + 50*i + 25:
                         settings_items_map[button]()
         screen.fill(background_color)
         for i, button in enumerate(settings_items):
-            if 150 + 50*i - 25 < my < 150 + 50*i + 25:
-                draw_text(button, main_menu_font, hover_color, screen, screen_size[0] / 2, 150 + 50*i)
+            if 100 + 50*i - 25 < my < 100 + 50*i + 25:
+                draw_text(button, main_menu_font, hover_color, screen, screen_size[0] / 2, 100 + 50*i)
             else:
-                draw_text(button, main_menu_font, text_color, screen, screen_size[0] / 2, 150 + 50*i)
+                draw_text(button, main_menu_font, text_color, screen, screen_size[0] / 2, 100 + 50*i)
         pygame.display.flip()
 
 
@@ -283,12 +283,12 @@ def game():
         # перевірка к-сті сердечок + текст переможець
         if health1 == 0:
             screen.fill(background_color)
-            draw_text("Game over", main_menu_font, text_color, screen, centerx, centery)
-            draw_text("Winner - PLayer 2", main_menu_font, text_color, screen, centerx, centery + 50)
+            draw_text("Game over", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2)
+            draw_text("Winner - PLayer 2", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2 + 50)
         elif health2 == 0:
             screen.fill(background_color)
-            draw_text("Game over", main_menu_font, text_color, screen, centerx, centery)
-            draw_text("Winner - PLayer 1", main_menu_font, text_color, screen, centerx, centery + 50)
+            draw_text("Game over", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2)
+            draw_text("Winner - PLayer 1", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2 + 50)
         else:
             screen.fill((0, 0, 0))
             pygame.draw.rect(screen, color_sky, (sky_x, sky_y, width_sky, height_sky))
@@ -313,9 +313,8 @@ menu_items_map = {
     "Settings": settings,
     "Exit": exit_game
 }
-settings_items = ["Continue", "Restart", "Return to menu", "Quit"]
+settings_items = ["Restart", "Return to menu", "Quit"]
 settings_items_map = {
-    "Continue": game,
     "Restart": game,
     "Return to menu": main_menu,
     "Quit": exit_game
