@@ -307,11 +307,11 @@ def game():
         if health1 == 0:
             screen.fill(background_color)
             draw_text("Game over", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2)
-            draw_text("Winner is PLayer 2", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2 + 50)
+            draw_text("Winner is Player 2", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2 + 50)
         elif health2 == 0:
             screen.fill(background_color)
             draw_text("Game over", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2)
-            draw_text("Winner is PLayer 1", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2 + 50)
+            draw_text("Winner is Player 1", main_menu_font, text_color, screen, screen_size[0]/2, screen_size[1]/2 + 50)
         else:
             screen.fill((0, 0, 0))
             pygame.draw.rect(screen, color_sky, (sky_x, sky_y, width_sky, height_sky))
