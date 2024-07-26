@@ -89,7 +89,8 @@ def show_health2():
     show = 0
     x = screen_size[0] - 120
     while show != health2:
-        screen.blit(health_img2, (x, 20))
+        draw_text("Player 2", main_menu_font, text_color, screen, screen_size[0] - 75, 20)
+        screen.blit(health_img2, (x, 40))
         x += 40
         show += 1
 
@@ -99,7 +100,8 @@ def show_health1():
     show = 0
     x = 20
     while show != health1:
-        screen.blit(health_img1, (x, 20))
+        draw_text("Player 1", main_menu_font, text_color, screen, 65, 20)
+        screen.blit(health_img1, (x, 40))
         x += 40
         show += 1
 
